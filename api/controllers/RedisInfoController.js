@@ -5,6 +5,13 @@ const responseUtil = require("../../util/responseUtil");
 const { md5 } = require("../../util/stringUtil");
 const RedisInfo = require("../models/RedisInfo.model");
 
+/**
+ * Get list for all redis server
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @returns {JSON}
+ */
 const redis_list = async (req, res) => {
   try {
     const info = await RedisInfo.findAll();
@@ -18,6 +25,13 @@ const redis_list = async (req, res) => {
   }
 };
 
+/**
+ * Get info of saved redis server
+ * @param {*} req : accepts md5 as key
+ * @param {*} res
+ * @param {*} next
+ * @returns {JSON}
+ */
 const redis_info = async (req, res) => {
   try {
     const query = req.query.md5;
@@ -38,6 +52,13 @@ const redis_info = async (req, res) => {
   }
 };
 
+/**
+ * Get stats of particular redis server
+ * @param {*} req : accepts md5 as key
+ * @param {*} res
+ * @param {*} next
+ * @returns {JSON}
+ */
 const redis_monitor = async (req, res) => {
   let rst;
   try {
@@ -71,6 +92,13 @@ const redis_monitor = async (req, res) => {
   return res.json(rst);
 };
 
+/**
+ * Check the status of redis server
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @returns {JSON}
+ */
 const ping = async (req, res) => {
   let rst = {};
   try {
@@ -86,6 +114,13 @@ const ping = async (req, res) => {
   return res.json(rst);
 };
 
+/**
+ * Add a new redis server
+ * @param {*} req : accepts md5 as key
+ * @param {*} res
+ * @param {*} next
+ * @returns {JSON}
+ */
 const add = async (req, res) => {
   let rst = {};
   let { host, port, password } = req.body;
@@ -122,6 +157,13 @@ const add = async (req, res) => {
   return res.json(responseUtil.standard_response(1, redis_info));
 };
 
+/**
+ * Delete redis server from db
+ * @param {*} req : accepts md5 as key
+ * @param {*} res
+ * @param {*} next
+ * @returns {JSON}
+ */
 const del = async (req, res) => {
   try {
     const query = req.query.md5;
@@ -158,6 +200,13 @@ const del = async (req, res) => {
   }
 };
 
+/**
+ * Flush redis server
+ * @param {*} req : accepts md5 as key
+ * @param {*} res
+ * @param {*} next
+ * @returns {JSON}
+ */
 const flushall = async (req, res) => {
   try {
     const { md5, db } = req.query;
