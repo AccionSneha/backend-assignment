@@ -1,6 +1,6 @@
 # Backend Assignment.
 
-### Test Assignment for porting a redis-monitorbackend to node/express app from existing repository.
+### Test Assignment for porting an existing redis-monitor repo to node/express app.
 Original Repository Link: https://github.com/NetEaseGame/redis-monitor
 
 # Installation
