@@ -1,22 +1,30 @@
-// # -*- coding: utf-8 -*-
-// '''
-// Created on 2015年11月26日
-// 一些reids的操作类，用于执行网页前段发送的redis命令
-// @author: hustcc
-// '''
-// import redis
+const { initRedis } = require("./redisMonitorUtil");
 
-// # 删除所有
-// def flushall(host, port, password, db):
-//     r = redis.Redis(host=host, port=int(port), password=password, db=int(db))
-//     return r.flushdb()
+const flushall = async (host, port, password, db) => {
+  let client = await initRedis(host, port, password, db);
+  return client.flushdb();
+};
 
-// # 添加一个键值
-// def set_value(host, port, password, db, key, value, timeout=-1):
-//     r = redis.Redis(host=host, port=int(port), password=password, db=int(db))
-//     return r.setex(key, value, timeout)
+const set_value = async (
+  host,
+  port,
+  password,
+  db,
+  key,
+  value,
+  timeout = -1
+) => {
+  let client = await initRedis(host, port, password, db);
+  return client.setex(key, value, timeout);
+};
 
-// # 删除键值
-// def del_key(host, port, password, db, key):
-//     r = redis.Redis(host=host, port=int(port), password=password, db=int(db))
-//     return r.delete(key)
+const del_key = async (host, port, password, db, key) => {
+  let client = await initRedis(host, port, password, db);
+  return client.delete(key);
+};
+
+module.exports = {
+  flushall,
+  set_value,
+  del_key,
+};

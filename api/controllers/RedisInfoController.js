@@ -1,4 +1,6 @@
+const redisMonitorUtil = require("../../util/redisMonitorUtil");
 const { RedisMonitor } = require("../../util/redisMonitorUtil");
+const redisUtil = require("../../util/redisUtil");
 const responseUtil = require("../../util/responseUtil");
 const { md5 } = require("../../util/stringUtil");
 const RedisInfo = require("../models/RedisInfo.model");
@@ -121,22 +123,65 @@ const add = async (req, res) => {
 };
 
 const del = async (req, res) => {
-  // md5 = RequestUtil.get_parameter('md5', '')
-  //   redis_info = RedisInfo.query.get(md5)
-  //   if redis_info:
-  //       redis_info.delete()
-  //       return ResponseUtil.standard_response(1, 'Success!')
-  //   return ResponseUtil.standard_response(0, 'Not Found!')
+  try {
+    const query = req.query.md5;
+
+    if (!query) {
+      return res.status(503).json({ msg: "Bad Request!" });
+    }
+    const info = await RedisInfo.findOne({ where: { md5: query } });
+
+    if (info) {
+      await RedisInfo.destroy({
+        where: {
+          md5: query,
+        },
+      });
+
+      if (info) {
+        return res.json(
+          responseUtil.standard_response(1, "Data deleted successfully.")
+        );
+      }
+      return res.json(
+        responseUtil.standard_response(
+          0,
+          "Unable to delete. Please try again later."
+        )
+      );
+    }
+
+    return res.json(responseUtil.standard_response(0, "Not Found!"));
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ msg: "Internal server error" });
+  }
 };
 
 const flushall = async (req, res) => {
   try {
-    const info = await RedisInfo.findAll();
+    const { md5, db } = req.query;
+    let r = {};
+    if (!md5) {
+      return res.status(503).json({ msg: "Bad Request!" });
+    }
+    const redis_info = await RedisInfo.findOne({ where: { md5: md5 } });
 
-    return res.status(200).json({ info });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({ msg: "Internal server error" });
+    if (redis_info) {
+      r = redisUtil.flushall(
+        redis_info.host,
+        redis_info.port,
+        redis_info.password,
+        db
+      );
+      if (r) {
+        return responseUtil.standard_response(1, "Success!");
+      }
+      return responseUtil.standard_response(0, "Flush db error!");
+    }
+    return responseUtil.standard_response(0, "Not Found!");
+  } catch (e) {
+    return responseUtil.standard_response(0, "Connect to redis error!");
   }
 };
 

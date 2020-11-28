@@ -2,12 +2,13 @@ const redis = require("redis");
 const util = require("util");
 const moment = require("moment");
 
-initRedis = async (host, port, password) => {
+initRedis = async (host, port, password, db = "redis_monitor") => {
   return new Promise((resolve, reject) => {
     let client = redis.createClient({
       host: host,
       port: port,
       password: password,
+      db: db,
     });
 
     client.on("error", (error) => {
@@ -76,4 +77,5 @@ class RedisMonitor {
 
 module.exports = {
   RedisMonitor,
+  initRedis,
 };
