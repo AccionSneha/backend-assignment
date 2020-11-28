@@ -1,23 +1,16 @@
 {
-  "name": "express-rest-api-boilerplate",
+  "name": "backend-assignment",
   "version": "0.0.0",
-  "author": "Lukas Aichbauer <l.aichbauer@gmail.com>",
-  "license": "MIT",
+  "author": "Sneha Lanjewar",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aichbauer/express-rest-api-boilerplate.git"
+    "url": "git+https://github.com/AccionSneha/backend-assignment.git"
   },
-  "homepage": "https://github.com/aichbauer/express-rest-api-boilerplate#readme",
-  "bugs": {
-    "url": "https://github.com/aichbauer/express-rest-api-boilerplate/issues"
-  },
+  "homepage": "https://github.com/AccionSneha/backend-assignment#readme",
+  
   "scripts": {
-    "prestart": "npm run drop-sqlite-db || true",
     "start": "npm run nodemon",
-    "poststart": "npm run create-sqlite-db",
     "dev": "cross-env NODE_ENV=development node ./index.js",
-    "create-sqlite-db": "shx touch ./db/database.sqlite",
-    "drop-sqlite-db": "shx rm ./db/database.sqlite",
     "production": "cross-env NODE_ENV=production node ./index.js"
   },
   "dependencies": {

@@ -2253,7 +2253,7 @@ has@^1.0.3:
 
 hashlib@^1.0.1:
   version "1.0.1"
-  resolved "https://registry.npmjs.org/hashlib/-/hashlib-1.0.1.tgz"
+  resolved "https://registry.yarnpkg.com/hashlib/-/hashlib-1.0.1.tgz#68d7c4924c10f2f67dd20ede79316397e772107c"
   integrity sha1-aNfEkkwQ8vZ90g7eeTFjl+dyEHw=
 
 helmet-crossdomain@0.4.0:
