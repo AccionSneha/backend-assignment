@@ -18,17 +18,11 @@ Please install yarn and nodejs if not already installed.
 Step1:
 
 ```sh
-yarn install
+yarn / npm install
 ```
 
 Step 2:
 
 ```sh
-redis-server.exe
-```
-
-Step 3:
-
-```sh
-yarn run dev
+yarn / npm start
 ```
