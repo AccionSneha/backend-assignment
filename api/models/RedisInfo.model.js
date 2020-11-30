@@ -25,12 +25,6 @@ const RedisInfo = sequelize.define(
       type: Sequelize.STRING,
       defaultValue: moment.now(),
     },
-    // createdAt: {
-    //   type: Sequelize.DATE,
-    // },
-    // updatedAt: {
-    //   type: Sequelize.DATE,
-    // },
   },
   { tableName }
 );

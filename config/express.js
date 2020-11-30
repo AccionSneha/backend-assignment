@@ -7,6 +7,9 @@ const routes = require("../index.route");
 
 const app = express();
 
+app.use("/static", express.static("static"));
+app.use("/", express.static("templates"));
+app.use("/favicon.ico", express.static("favicon.ico"));
 app.use(cors());
 
 app.use(

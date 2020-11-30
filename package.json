@@ -7,7 +7,6 @@
     "url": "git+https://github.com/AccionSneha/backend-assignment.git"
   },
   "homepage": "https://github.com/AccionSneha/backend-assignment#readme",
-  
   "scripts": {
     "start": "npm run nodemon",
     "dev": "cross-env NODE_ENV=development node ./index.js",
@@ -23,13 +22,16 @@
     "hashlib": "^1.0.1",
     "helmet": "^3.12.0",
     "jsonwebtoken": "^8.2.1",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",    
     "redis": "^3.0.2",
     "sequelize": "^6.0.0",
     "sqlite3": "^5.0.0"
-    
   },
   "devDependencies": {
     "cross-env": "^5.1.4",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.11.0",
