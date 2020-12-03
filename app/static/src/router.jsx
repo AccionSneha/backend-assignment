@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Router, Route, hashHistory } from "react-router";
 
-import MainComponent from "./common/main.js";
+import MainComponent from "./common/main.jsx";
 
-import Redis from "./redis.js";
+import Redis from "./redis.jsx";
 
 ReactDOM.render(
   <Router history={hashHistory}>

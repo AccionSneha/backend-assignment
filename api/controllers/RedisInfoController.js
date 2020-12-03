@@ -83,7 +83,6 @@ const redis_monitor = async (req, res) => {
       );
     }
   } catch (err) {
-    console.log("ERROR", err);
     rst = responseUtil.standard_response(
       0,
       "error getting redis realtime information!"
@@ -126,7 +125,7 @@ const add = async (req, res) => {
   let { host, port, password } = req.body;
   port = !port ? 6379 : port;
 
-  if (!(host && port)) {
+  if (!host) {
     return res.json(responseUtil.standard_response(0, "Paramter missing!"));
   }
 
@@ -166,34 +165,26 @@ const add = async (req, res) => {
  */
 const del = async (req, res) => {
   try {
-    const query = req.query.md5;
+    const { md5 } = req.body;
 
-    if (!query) {
+    if (!md5) {
       return res.status(503).json({ msg: "Bad Request!" });
     }
-    const info = await RedisInfo.findOne({ where: { md5: query } });
+    const info = await RedisInfo.findOne({ where: { md5: md5 } });
 
-    if (info) {
+    if (info && info.toJSON()) {
       await RedisInfo.destroy({
         where: {
-          md5: query,
+          md5: md5,
         },
       });
 
-      if (info) {
-        return res.json(
-          responseUtil.standard_response(1, "Data deleted successfully.")
-        );
-      }
       return res.json(
-        responseUtil.standard_response(
-          0,
-          "Unable to delete. Please try again later."
-        )
+        responseUtil.standard_response(1, "Data deleted successfully.")
       );
+    } else {
+      return res.json(responseUtil.standard_response(0, "Not Found!"));
     }
-
-    return res.json(responseUtil.standard_response(0, "Not Found!"));
   } catch (err) {
     console.log(err);
     return res.status(500).json({ msg: "Internal server error" });

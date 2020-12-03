@@ -1,15 +1,15 @@
 var webpack = require("webpack");
 
-// var uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({
-//   output: { comments: false },
-//   compress: { warnings: false },
-// });
+var uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({
+  output: { comments: false },
+  compress: { warnings: false },
+});
 
-// var definePlugin = new webpack.DefinePlugin({
-//   "process.env": {
-//     NODE_ENV: '"production"',
-//   },
-// });
+var definePlugin = new webpack.DefinePlugin({
+  "process.env": {
+    NODE_ENV: '"production"',
+  },
+});
 
 module.exports = {
   entry: {
@@ -36,5 +36,5 @@ module.exports = {
       },
     ],
   },
-  // plugins: [uglifyJsPlugin, definePlugin],
+  plugins: [definePlugin],
 };

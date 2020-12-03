@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router";
-import OnFireMixin from "../mixins/onFireMixin.js";
+import OnFireMixin from "../mixins/onFireMixin.jsx";
 
 const Header = React.createClass({
   __ONFIRE__: "Header",
-  mixins: [OnFireMixin], // 引入 mixin
+  mixins: [OnFireMixin],
   getInitialState: function () {
     return { title: "Redis List", url: "" };
   },

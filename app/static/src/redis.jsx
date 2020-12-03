@@ -1,18 +1,18 @@
 import React from "react";
 import { Link } from "react-router";
-import AdSense from "react-adsense";
 import OnFireMixin from "./mixins/onFireMixin.jsx";
 import TipShowMixin from "./mixins/tipShowMixin.jsx";
 import RequestsMixin from "./mixins/xhrRequestsMixin.jsx";
-import Utils from "./utils";
+import Utils from "./utils/utils.jsx";
 import ReactEcharts from "echarts-for-react";
+import { baseUrl } from "./utils/constants.jsx";
 
 const Redis = React.createClass({
   __ONFIRE__: "Redis",
   timer: null,
   max_length: 200,
   intervalTime: 1100,
-  mixins: [RequestsMixin, OnFireMixin, TipShowMixin], // 引入 mixin
+  mixins: [RequestsMixin, OnFireMixin, TipShowMixin],
   defaultOption: function (text, subtext, legend, yAxis_name, y_format) {
     let option = {
       title: {
@@ -117,48 +117,48 @@ const Redis = React.createClass({
   },
   refreshRedisInfo: function () {
     this.get(
-      "/api/redis_monitor",
+      `${baseUrl}/redis_monitor`,
       { md5: this.props.params.md5 },
       function (r) {
         r = r.json();
         if (r.success) {
           let now = Utils.current_time();
           let time_chart = this.state.time_chart;
-          time_chart.series[0].data.shift(); // 删除第一个
+          time_chart.series[0].data.shift();
           time_chart.series[0].data.push(r.data.get_time);
-          time_chart.xAxis.data.shift(); // 删除第一个
-          time_chart.xAxis.data.push(now); // 添加一个
+          time_chart.xAxis.data.shift();
+          time_chart.xAxis.data.push(now);
 
           let ops_chart = this.state.ops_chart;
-          ops_chart.series[0].data.shift(); // 删除第一个
+          ops_chart.series[0].data.shift();
           ops_chart.series[0].data.push(r.data.instantaneous_ops_per_sec);
-          ops_chart.xAxis.data.shift(); // 删除第一个
-          ops_chart.xAxis.data.push(now); // 添加一个
+          ops_chart.xAxis.data.shift();
+          ops_chart.xAxis.data.push(now);
 
           let mem_chart = this.state.mem_chart;
-          mem_chart.series[0].data.shift(); // 删除第一个
+          mem_chart.series[0].data.shift();
           mem_chart.series[0].data.push((r.data.used_memory / 1024).toFixed(2));
-          mem_chart.series[1].data.shift(); // 删除第一个
+          mem_chart.series[1].data.shift();
           mem_chart.series[1].data.push(
             (r.data.used_memory_rss / 1024).toFixed(2)
           );
-          mem_chart.xAxis.data.shift(); // 删除第一个
-          mem_chart.xAxis.data.push(now); // 添加一个
+          mem_chart.xAxis.data.shift();
+          mem_chart.xAxis.data.push(now);
 
           let cpu_chart = this.state.cpu_chart;
-          cpu_chart.series[0].data.shift(); // 删除第一个
+          cpu_chart.series[0].data.shift();
           cpu_chart.series[0].data.push(r.data.used_cpu_sys);
-          cpu_chart.series[1].data.shift(); // 删除第一个
+          cpu_chart.series[1].data.shift();
           cpu_chart.series[1].data.push(r.data.used_cpu_user);
-          cpu_chart.series[2].data.shift(); // 删除第一个
+          cpu_chart.series[2].data.shift();
           cpu_chart.series[2].data.push(r.data.used_cpu_user_children);
-          cpu_chart.series[3].data.shift(); // 删除第一个
+          cpu_chart.series[3].data.shift();
           cpu_chart.series[3].data.push(r.data.used_cpu_sys_children);
-          cpu_chart.xAxis.data.shift(); // 删除第一个
-          cpu_chart.xAxis.data.push(now); // 添加一个
+          cpu_chart.xAxis.data.shift();
+          cpu_chart.xAxis.data.push(now);
 
           this.setState({ redis_monitor: r.data });
-          // 重新开发
+
           this.timer = setTimeout(this.refreshRedisInfo, this.intervalTime);
         }
       }.bind(this)
@@ -169,14 +169,14 @@ const Redis = React.createClass({
     this.timer = null;
   },
   flush_redis: function (md5, db) {
-    this.get("/api/redis/flushall", { md5: md5, db: db });
+    `this.get(${baseUrl}/redis/flushall", { md5: md5, db: db }`;
   },
   componentDidMount: function () {
     this.clear();
     this.timer = setTimeout(this.refreshRedisInfo, this.intervalTime);
 
     this.get(
-      "/api/redis_info",
+      `${baseUrl}/redis_info`,
       { md5: this.props.params.md5 },
       function (r) {
         r = r.json();
@@ -269,7 +269,6 @@ const Redis = React.createClass({
           </span>
           ] Redis Monitor Informations{" "}
         </h1>
-        <AdSense.Google client="ca-pub-7292810486004926" slot="7806394673" />
 
         <table
           width="100%"

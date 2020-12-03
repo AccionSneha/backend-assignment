@@ -1,26 +1,25 @@
 import React from "react";
 import { Link } from "react-router";
-import AdSense from "react-adsense";
-import OnFireMixin from "./mixins/onFireMixin.js";
-import TipShowMixin from "./mixins/tipShowMixin.js";
-import RequestsMixin from "./mixins/xhrRequestsMixin.js";
+import OnFireMixin from "./mixins/onFireMixin.jsx";
+import TipShowMixin from "./mixins/tipShowMixin.jsx";
+import RequestsMixin from "./mixins/xhrRequestsMixin.jsx";
 import TimeAgo from "timeago-react";
+import { baseUrl } from "./utils/constants.jsx";
 
 const Index = React.createClass({
   __ONFIRE__: "Index",
-  mixins: [RequestsMixin, OnFireMixin, TipShowMixin], // 引入 mixin
+  mixins: [RequestsMixin, OnFireMixin, TipShowMixin],
   getInitialState: function () {
     return { redis_list: [] };
   },
   onBtnSubmit: function () {
-    console.log("this0---------------", this);
     let host = this.refs.new_host;
     let port = this.refs.new_port;
     let password = this.refs.new_password;
     console.log(host, port, password);
 
     this.post(
-      "/api/add",
+      `${baseUrl}/add`,
       {
         host: host.value,
         port: port.value || "6379",
@@ -29,7 +28,6 @@ const Index = React.createClass({
       function (r) {
         r = r.json();
         if (r.success) {
-          // 成功，放到最前面
           this.loadRedisList();
         } else this.showError(r.data);
       }.bind(this)
@@ -43,7 +41,7 @@ const Index = React.createClass({
   },
   onDelRedis: function (md5) {
     this.post(
-      "/api/del",
+      `${baseUrl}/del`,
       { md5: md5 },
       function (r) {
         r = r.json();
@@ -55,12 +53,12 @@ const Index = React.createClass({
   },
   loadRedisList: function () {
     this.get(
-      "/api/redis_list",
+      `${baseUrl}/redis_list`,
       {},
       function (r) {
         r = r.json();
         if (r.success) this.setState({ redis_list: r.data });
-        else this.showError(r.data);
+        // else this.showError(r.data);
       }.bind(this)
     );
   },
@@ -71,7 +69,6 @@ const Index = React.createClass({
     return (
       <div>
         <h1>Redis Instance List - Redis Monitor Informations </h1>
-        <AdSense.Google client="ca-pub-7292810486004926" slot="7806394673" />
 
         <form ref="form">
           Host:{" "}
