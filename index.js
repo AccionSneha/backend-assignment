@@ -5,8 +5,8 @@ const environment = process.env.NODE_ENV;
 const { app, express } = require("./config/express");
 const port = process.env.PORT;
 
-// const dbService = require("./api/services/db.service");
-// const DB = dbService(environment, config.migrate).start();
+const dbService = require("./api/services/db.service");
+const DB = dbService(environment, config.migrate).start();
 
 app.use("/static", express.static(path.join(__dirname, "app", "static")));
 app.use(
@@ -23,7 +23,7 @@ app.get("/*", (req, res) => {
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
-  // return DB;
+  return DB;
 });
 
 module.exports = app;
