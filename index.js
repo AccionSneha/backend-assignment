@@ -8,16 +8,12 @@ const port = process.env.PORT;
 const dbService = require("./api/services/db.service");
 const DB = dbService(environment, config.migrate).start();
 
-process.env.PWD = process.cwd();
-
-// console.log(path.join(process.env.PWD, "app", "static"));
-
-app.use(express.static(path.join(process.env.PWD, "app")));
-app.use("/static", express.static(path.join(process.env.PWD, "app", "static")));
+app.use("/public", express.static(path.join(__dirname, "app", "static")));
+app.use("/templates", express.static(path.join(__dirname, "app", "templates")));
 app.use("/favicon.ico", express.static("favicon.ico"));
 app.get("/", (req, res) => {
   return res.sendFile(
-    path.join(process.env.PWD, "app", "templates", "index_page.html")
+    path.join(__dirname, "app", "templates", "index_page.html")
   );
 });
 
