@@ -1,6 +1,9 @@
 {
   "name": "backend-assignment",
   "version": "1.0.0",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "lint:js": "eslint app/static/src",
     "lint:py": "flake8",
