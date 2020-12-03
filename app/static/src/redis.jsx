@@ -128,7 +128,6 @@ const Redis = React.createClass({
           time_chart.series[0].data.push(r.data.get_time);
           time_chart.xAxis.data.shift();
           time_chart.xAxis.data.push(now);
-
           let ops_chart = this.state.ops_chart;
           ops_chart.series[0].data.shift();
           ops_chart.series[0].data.push(r.data.instantaneous_ops_per_sec);
@@ -156,6 +155,7 @@ const Redis = React.createClass({
           cpu_chart.series[3].data.push(r.data.used_cpu_sys_children);
           cpu_chart.xAxis.data.shift();
           cpu_chart.xAxis.data.push(now);
+          console.log(cpu_chart);
 
           this.setState({ redis_monitor: r.data });
 

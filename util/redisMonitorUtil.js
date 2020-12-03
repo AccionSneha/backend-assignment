@@ -111,10 +111,6 @@ new_request = async (host, port, password, charset = "utf8") => {
 
     let info = client.server_info;
 
-    /**
-     * Parse server information to float.
-     * @param {*} info : server information for client.server_info
-     */
     parseServerInfo(info);
 
     let end = moment.now();

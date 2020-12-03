@@ -36,5 +36,5 @@ module.exports = {
       },
     ],
   },
-  plugins: [definePlugin],
+  plugins: [definePlugin, uglifyJsPlugin],
 };

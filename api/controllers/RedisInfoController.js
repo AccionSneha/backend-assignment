@@ -16,7 +16,7 @@ const redis_list = async (req, res) => {
   try {
     const info = await RedisInfo.findAll();
     if (!info.length) {
-      return res.json(responseUtil.standard_response(0, "Not Found!"));
+      return res.json(responseUtil.standard_response(1, []));
     }
     return res.json(responseUtil.standard_response(1, info));
   } catch (err) {
@@ -179,9 +179,7 @@ const del = async (req, res) => {
         },
       });
 
-      return res.json(
-        responseUtil.standard_response(1, "Data deleted successfully.")
-      );
+      return res.json(responseUtil.standard_response(1, "Success!"));
     } else {
       return res.json(responseUtil.standard_response(0, "Not Found!"));
     }

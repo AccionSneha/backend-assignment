@@ -7,7 +7,9 @@
     "test": "npm run lint:js && npm run lint:py",
     "js": "webpack --config webpack.config.js",
     "dev_js": "webpack --config webpack.config.js --watch",
-    "server": "cross-env NODE_ENV=development node ./index.js"
+    "server": "cross-env NODE_ENV=development node ./index.js",
+    "prod": "node ./index.js",
+    "start": "npm run js && npm run prod"
   },
   "keywords": [],
   "author": "Sneha Lanjewar",
@@ -43,8 +45,9 @@
     "body-parser": "^1.18.2",
     "concurrently": "^5.3.0",
     "cors": "^2.8.4",
+    "dotenv": "^8.2.0",
     "echarts": "^3.0.0",
-    "echarts-for-react": ">=1.1.6",
+    "echarts-for-react": "1.1.6",
     "express": "^4.16.3",
     "helmet": "^3.12.0",
     "onfire.js": "1.0.6",

@@ -58,7 +58,7 @@ const Index = React.createClass({
       function (r) {
         r = r.json();
         if (r.success) this.setState({ redis_list: r.data });
-        // else this.showError(r.data);
+        else this.showError(r.data);
       }.bind(this)
     );
   },
