@@ -9,6 +9,10 @@ const dbService = require("./api/services/db.service");
 const DB = dbService(environment, config.migrate).start();
 
 app.use("/static", express.static(path.join(__dirname, "app", "static")));
+app.use(
+  "/static/dist",
+  express.static(path.join(__dirname, "app", "static", "dist"))
+);
 app.use("/templates", express.static(path.join(__dirname, "app", "templates")));
 app.use("/favicon.ico", express.static("favicon.ico"));
 app.get("/*", (req, res) => {
@@ -16,6 +20,10 @@ app.get("/*", (req, res) => {
     path.join(__dirname, "app", "templates", "index_page.html")
   );
 });
+
+// app.get("/", (req, res) => {
+//   res.sendFile("index.html", { root: __dirname + "/public/" });
+// });
 
 // app.use("/public", express.static("public"));
 
