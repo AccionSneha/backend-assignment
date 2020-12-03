@@ -1,6 +1,5 @@
-const cors = require("cors");
-const path = require("path");
 require("dotenv").config();
+const cors = require("cors");
 const helmet = require("helmet");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -9,7 +8,6 @@ const routes = require("../index.route");
 const app = express();
 
 app.use(cors());
-
 app.use(
   helmet({
     dnsPrefetchControl: false,

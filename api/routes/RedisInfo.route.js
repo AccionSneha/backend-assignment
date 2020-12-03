@@ -3,13 +3,13 @@ const RedisInfoController = require("../controllers/RedisInfoController");
 const router = express.Router();
 
 //get redis list
-router.route("/redis_list").get(RedisInfoController.redis_list);
+router.route("/redis_list").get(RedisInfoController.redisList);
 
 //get redis info
-router.route("/redis_info").get(RedisInfoController.redis_info);
+router.route("/redis_info").get(RedisInfoController.redisInfo);
 
 //get redis monitor
-router.route("/redis_monitor").get(RedisInfoController.redis_monitor);
+router.route("/redis_monitor").get(RedisInfoController.monitor);
 
 //get ping
 router.route("/ping").get(RedisInfoController.ping);

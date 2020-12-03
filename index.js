@@ -1,9 +1,9 @@
+require("dotenv").config();
 const path = require("path");
 const config = require("./config");
-const environment = process.env.NODE_ENV || "development";
+const environment = process.env.NODE_ENV;
 const { app, express } = require("./config/express");
-const port = process.env.PORT || config.port;
-require("dotenv").config();
+const port = process.env.PORT;
 
 const dbService = require("./api/services/db.service");
 const DB = dbService(environment, config.migrate).start();
