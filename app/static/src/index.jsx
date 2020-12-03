@@ -16,7 +16,6 @@ const Index = React.createClass({
     let host = this.refs.new_host;
     let port = this.refs.new_port;
     let password = this.refs.new_password;
-    console.log(host, port, password);
 
     this.post(
       `${baseUrl}/add`,

@@ -12,13 +12,12 @@ const { standardResponse } = require("../../util/responseUtil");
  */
 const redisList = async (req, res) => {
   try {
-    const info = await RedisInfoModel.findAll();
-    if (!info.length) {
+    const serverInfo = await RedisInfoModel.findAll();
+    if (!serverInfo.length) {
       return res.json(standardResponse(1, []));
     }
-    return res.json(standardResponse(1, info));
+    return res.json(standardResponse(1, serverInfo));
   } catch (err) {
-    console.log(err);
     return res.status(500).json({ msg: "Internal server error" });
   }
 };
@@ -37,15 +36,14 @@ const redisInfo = async (req, res) => {
     if (!query) {
       return res.status(503).json({ msg: "Bad Request!" });
     }
-    const info = await RedisInfoModel.findOne({ where: { md5: query } });
+    const serverInfo = await RedisInfoModel.findOne({ where: { md5: query } });
 
-    if (info) {
-      return res.json(standardResponse(1, info));
+    if (serverInfo) {
+      return res.json(standardResponse(1, serverInfo));
     }
 
     return res.json(standardResponse(0, "Not Found!"));
   } catch (err) {
-    console.log(err);
     return res.status(500).json({ msg: "Internal server error" });
   }
 };
@@ -64,16 +62,15 @@ const monitor = async (req, res) => {
     if (!query) {
       return res.status(503).json({ msg: "Bad Request!" });
     }
-    let info = await RedisInfoModel.findOne({ where: { md5: query } });
+    let serverInfo = await RedisInfoModel.findOne({ where: { md5: query } });
+    serverInfo = serverInfo ? serverInfo.toJSON() : {};
 
-    info = info ? info.toJSON() : {};
-
-    if (info) {
+    if (serverInfo) {
       const redisMonitor = new RedisMonitor();
       response = await redisMonitor.getRedisServerInfo(
-        info.host,
-        info.port,
-        info.password
+        serverInfo.host,
+        serverInfo.port,
+        serverInfo.password
       );
     } else {
       response = standardResponse(0, "redis informations does not exist!");
@@ -92,18 +89,18 @@ const monitor = async (req, res) => {
  * @returns {JSON}
  */
 const ping = async (req, res) => {
-  let rst = {};
+  let response = {};
   try {
     let { host, port, password } = req.query;
     port = !port ? 6379 : port;
 
     const redisMonitor = new RedisMonitor();
 
-    rst = await redisMonitor.ping(host, port, password);
+    response = await redisMonitor.ping(host, port, password);
   } catch (e) {
-    rst = { success: 0, data: "ping error!" };
+    response = { success: 0, data: "ping error!" };
   }
-  return res.json(rst);
+  return res.json(response);
 };
 
 /**
@@ -114,39 +111,40 @@ const ping = async (req, res) => {
  * @returns {JSON}
  */
 const add = async (req, res) => {
-  let response = {};
-  let { host, port, password } = req.body;
-  port = !port ? 6379 : port;
-
-  if (!host) {
-    return res.json(standardResponse(0, "Paramter missing!"));
-  }
-
   try {
+    let response = {};
+    let { host, port, password } = req.body;
+    port = !port ? 6379 : port;
+
+    if (!host) {
+      return res.json(standardResponse(0, "Paramter missing!"));
+    }
+
+    //check if host and port is available
     const redisMonitor = new RedisMonitor();
     response = await redisMonitor.ping(host, port, password);
 
     if (!response) {
       return res.json(standardResponse(0, "Ping error!"));
     }
-  } catch (e) {
-    standardResponse(0, "Ping error!");
-  }
 
-  let md5String = md5(host + port.toString());
-  let redisInfo = await RedisInfoModel.findOne({ where: { md5: md5String } });
+    let md5String = md5(host + port.toString());
+    let redisInfo = await RedisInfoModel.findOne({ where: { md5: md5String } });
 
-  if (redisInfo) {
-    redisInfo.password = password;
-  } else {
-    redisInfo = await RedisInfoModel.create({
-      md5: md5String,
-      host: host,
-      port: port,
-      password: password,
-    });
+    if (redisInfo) {
+      redisInfo.password = password;
+    } else {
+      redisInfo = await RedisInfoModel.create({
+        md5: md5String,
+        host: host,
+        port: port,
+        password: password,
+      });
+    }
+    return res.json(standardResponse(1, redisInfo));
+  } catch (error) {
+    return res.status(500).json({ msg: "Internal server error" });
   }
-  return res.json(standardResponse(1, redisInfo));
 };
 
 /**
@@ -163,9 +161,10 @@ const del = async (req, res) => {
     if (!md5) {
       return res.status(503).json({ msg: "Bad Request!" });
     }
-    const info = await RedisInfoModel.findOne({ where: { md5: md5 } });
+    let serverInfo = await RedisInfoModel.findOne({ where: { md5: md5 } });
+    serverInfo = serverInfo ? serverInfo.toJSON() : {};
 
-    if (info && info.toJSON()) {
+    if (serverInfo) {
       await RedisInfoModel.destroy({
         where: {
           md5: md5,
@@ -177,7 +176,6 @@ const del = async (req, res) => {
       return res.json(standardResponse(0, "Not Found!"));
     }
   } catch (err) {
-    console.log(err);
     return res.status(500).json({ msg: "Internal server error" });
   }
 };
@@ -196,9 +194,9 @@ const flushall = async (req, res) => {
     if (!md5) {
       return res.status(503).json({ msg: "Bad Request!" });
     }
-    const redisInfo = await RedisInfoModel.findOne({ where: { md5: md5 } });
+    let serverInfo = await RedisInfoModel.findOne({ where: { md5: md5 } });
 
-    if (redisInfo) {
+    if (serverInfo) {
       const redisMonitor = new RedisMonitor();
       response = await redisMonitor.flushall(host, port, password, db);
 

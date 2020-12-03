@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../../config/database");
-const { dateTime } = require("../../util/momentUtil");
+const moment = require("moment");
+
 const tableName = "redis_monitor";
 
 const RedisInfo = sequelize.define(
@@ -22,7 +23,10 @@ const RedisInfo = sequelize.define(
     },
     add_time: {
       type: Sequelize.STRING,
-      defaultValue: dateTime,
+      defaultValue: () => {
+        now = moment();
+        return now.format("YYYY-MM-DD H:mm:ss");
+      },
     },
   },
   { tableName }
