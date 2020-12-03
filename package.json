@@ -12,7 +12,7 @@
     "dev_js": "webpack --config webpack.config.js --watch",
     "server": "cross-env NODE_ENV=development node ./index.js",
     "prod": "node ./index.js",
-    "start": "npm run js && npm run prod"
+    "start": "npm run prod"
   },
   "keywords": [],
   "author": "Sneha Lanjewar",
