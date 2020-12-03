@@ -34,18 +34,18 @@ yarn / npm start
 
 - basic information
 
-![shot_1](/doc/redis_info.png)
+![shot_1](/doc/shot_1.png)
 
 - connection time gragh
 
-![shot_2](/doc/redis_connect_time.png)
+![shot_2](/doc/shot_2.png)
 
 - ops time gragh
 
-![shot_3](/doc/command_per_second.png)
+![shot_3](/doc/shot_3.png)
 
 - cpu and mem gragh
 
-![shot_4](/doc/cpu_usage.png)
+![shot_4](/doc/shot_4.png)
 
-![shot_5](/doc/memory_usage.png)
+![shot_5](/doc/shot_5.png)
