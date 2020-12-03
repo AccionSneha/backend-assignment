@@ -5,8 +5,8 @@ const environment = process.env.NODE_ENV;
 const { app, express } = require("./config/express");
 const port = process.env.PORT;
 
-const dbService = require("./api/services/db.service");
-const DB = dbService(environment, config.migrate).start();
+// const dbService = require("./api/services/db.service");
+// const DB = dbService(environment, config.migrate).start();
 
 app.use("/static", express.static(path.join(__dirname, "app", "static")));
 app.use(
@@ -21,20 +21,9 @@ app.get("/*", (req, res) => {
   );
 });
 
-// app.get("/", (req, res) => {
-//   res.sendFile("index.html", { root: __dirname + "/public/" });
-// });
-
-// app.use("/public", express.static("public"));
-
-// // define the first route
-// app.get("/", function (req, res) {
-//   return res.sendFile(path.join(__dirname, "public", "index_page.html"));
-// });
-
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
-  return DB;
+  // return DB;
 });
 
 module.exports = app;

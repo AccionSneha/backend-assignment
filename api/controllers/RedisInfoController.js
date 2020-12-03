@@ -65,7 +65,9 @@ const monitor = async (req, res) => {
       return res.status(503).json({ msg: "Bad Request!" });
     }
     let info = await RedisInfoModel.findOne({ where: { md5: query } });
+
     info = info ? info.toJSON() : {};
+
     if (info) {
       const redisMonitor = new RedisMonitor();
       response = await redisMonitor.getRedisServerInfo(

@@ -9,11 +9,14 @@ const { standardResponse } = require("./responseUtil");
  * @param {*} password : password if any
  */
 const initRedis = async (host, port, password) => {
+  console.log(host, port, password);
+
   return new Promise((resolve, reject) => {
     let client = redis.createClient({
       host: host,
       port: port,
-      password: password,
+      // no_ready_check: true,
+      auth_pass: password,
     });
 
     client.on("error", (error) => {
