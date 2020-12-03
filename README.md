@@ -1,6 +1,7 @@
 # Backend Assignment.
 
 ### Test Assignment for porting an existing redis-monitor repo to node/express app.
+
 Original Repository Link: https://github.com/NetEaseGame/redis-monitor
 
 # Installation
@@ -26,3 +27,23 @@ Step 2:
 ```sh
 yarn / npm start
 ```
+
+## screenshot
+
+- basic information
+
+![shot_1](/doc/redis_info.png)
+
+- connection time gragh
+
+![shot_2](/doc/redis_connect_time.png)
+
+- ops time gragh
+
+![shot_3](/doc/command_per_second.png)
+
+- cpu and mem gragh
+
+![shot_4](/doc/cpu_usage.png)
+
+![shot_5](/doc/memory_usage.png)
