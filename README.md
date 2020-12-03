@@ -1,5 +1,7 @@
 # Backend Assignment.
 
+The application can be accessed on following url: https://redis-monit.herokuapp.com/
+
 ### Test Assignment for porting an existing redis-monitor repo to node/express app.
 
 Original Repository Link: https://github.com/NetEaseGame/redis-monitor
