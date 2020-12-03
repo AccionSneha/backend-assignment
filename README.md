@@ -4,7 +4,7 @@
 
 The application can be accessed on following url: https://redis-monit.herokuapp.com/
 
-[![Heroku](https://heroku-badge.herokuapp.com/?app=redis-monit)](https://heroku-badge.herokuapp.com)
+[![Heroku](https://heroku-badge.herokuapp.com/?app=redis-monit)](https://heroku-badge.herokuapp.com/?app=redis-monit)
 
 # Installation
 
