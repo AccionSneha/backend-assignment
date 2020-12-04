@@ -17,6 +17,20 @@ Please make sure your computer/server meets the following requirements:
 - [node](https://nodejs.org/en/download/) >=8.10.0
 - [yarn](https://classic.yarnpkg.com/en/docs/install) >=1.5.1
 
+
+## Dependency
+
+Download and install redis-cli for connecting to local redis server.
+
+1. [Download redis here!](https://redis.io/download)
+
+2. To connect to local redis server run following command in terminal. 
+```sh
+redis-server
+```
+
+3. The local redis server by default listens on [127.0.0.1:6379](http://127.0.0.1:6379)
+
 ## Development
 
 Please install yarn and nodejs if not already installed.
